@@ -1,0 +1,196 @@
+﻿@model TbItem
+
+@section headLinks{
+    <style>
+        /* خلفية للفورم */
+        .custom-form-bg {
+            background-color: #f8f9fa;
+        }
+
+        /* شكل الحقول */
+        .form-control,
+        .form-select {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            color: #000000; /* 🟢 نخلي النص أسود */
+        }
+
+        /* الحقل الخاص بالاسم */
+        #ItemName {
+            background-color: #fffacd;
+            color: #000000; /* 🟢 نخلي النص أسود */
+        }
+
+        /* في حال فيه textarea */
+        textarea.form-control {
+            color: #000000;
+        }
+    </style>
+}
+<form method="post" enctype="multipart/form-data" asp-controller="Items" asp-action="save" class="custom-form-bg p-4 rounded shadow-sm">
+    <div class="row">
+
+        @* --- مكان عرض رسائل الخطأ من الـ ModelState (بالـ Bootstrap Alert) --- *@
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @ViewBag.ErrorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @* --- نهاية مكان عرض رسائل الخطأ --- *@
+
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label for="ItemName" class="form-label text-muted">@generalResours.lblItemName</label>
+                <input name="ItemName" asp-for="ItemName" type="text" class="form-control" id="ItemName">
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+                @* Hiddens for existing values that need to be passed back *@
+                <input asp-for="ImageName" type="hidden" class="form-control">
+                <input asp-for="CreatedBy" type="hidden" class="form-control">
+                <input asp-for="CreatedDate" type="hidden" class="form-control">
+                <input asp-for="CurrentState" type="hidden" class="form-control">
+                <input asp-for="ItemId" type="hidden" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+                <label for="Category" class="form-label text-muted">@generalResours.lblCategory</label>
+                <select asp-items="@(new SelectList(ViewBag.Categories,"CategoryId","CategoryName"))" asp-for="CategoryId" class="form-select" id="Category"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="ItemType" class="form-label text-muted">@generalResours.lblItemType</label>
+                <select asp-for="ItemTypeId" asp-items="@(new SelectList(ViewBag.ItemType,"ItemTypeId","ItemTypeName"))" class="form-select" id="ItemType"></select>
+                <span asp-validation-for="ItemTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="Os" class="form-label text-muted">@generalResours.lbloS</label>
+                <select asp-for="OsId" asp-items="@(new SelectList(ViewBag.lstOs,"OsId","OsName"))" class="form-select" id="Os"></select>
+                <span asp-validation-for="OsId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="SalesPrice" class="form-label text-muted">@generalResours.SalesPrice</label>
+                <input asp-for="SalesPrice" type="text" class="form-control" id="SalesPrice">
+                <span asp-validation-for="SalesPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="PurchasePrice" class="form-label text-muted">@generalResours.PurchasePrice</label>
+                <input asp-for="PurchasePrice" type="text" class="form-control" id="PurchasePrice">
+                <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label for="GPU" class="form-label text-muted">@generalResours.GPU</label>
+                <input asp-for="Gpu" type="text" class="form-control" id="GPU">
+                <span asp-validation-for="Gpu" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="Processor" class="form-label text-muted">@generalResours.Processor</label>
+                <input asp-for="Processor" type="text" class="form-control" id="Processor">
+                <span asp-validation-for="Processor" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="HardDisk" class="form-label text-muted">@generalResours.HardDisk</label>
+                <input asp-for="HardDisk" type="text" class="form-control" id="HardDisk">
+                <span asp-validation-for="HardDisk" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="Weight" class="form-label text-muted">@generalResours.Weight</label>
+                <input asp-for="Weight" type="text" class="form-control" id="Weight">
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="RamSize" class="form-label text-muted">@generalResours.ramSize</label>
+                <input asp-for="RamSize" type="text" class="form-control" id="RamSize">
+                <span asp-validation-for="RamSize" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label for="ScreenReslution" class="form-label text-muted">@generalResours.ScreenReslution</label>
+                <input asp-for="ScreenReslution" type="text" class="form-control" id="ScreenReslution">
+                <span asp-validation-for="ScreenReslution" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="ImageFile" class="form-label text-muted">@generalResours.lblImage</label>
+                <input name="files" type="file" class="form-control" id="ImageFile" onchange="displayImage(this)">
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                @* تأكد من أن الـ ImageName موجودة قبل عرض الصورة *@
+                @if (!string.IsNullOrEmpty(Model.ImageName))
+                {
+                    <img src="~/Uploads/@Model.ImageName" alt="Item Image" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px; padding: 5px;" id="currentImagePreview">
+                }
+                else
+                {
+                    @* صورة Placeholder لو مفيش صورة حالية *@
+                    <img src="https://via.placeholder.com/150?text=No+Image" alt="No Image" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px; padding: 5px;" id="currentImagePreview">
+                }
+            </div>
+            <button type="submit" class="btn btn-primary">@generalResours.lblSave</button>
+        </div>
+    </div>
+</form>
+
+@section script {
+    @* --- استدعاء ملفات SweetAlert2 --- *@
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    @* --- نهاية استدعاء ملفات SweetAlert2 --- *@
+
+    <script>
+        function displayImage(fileInput) {
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var imagePreview = document.getElementById('currentImagePreview');
+                    if (imagePreview) {
+                        imagePreview.src = e.target.result;
+                    }
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        $(document).ready(function() {
+            var successMessage = @Html.Raw(Json.Serialize(TempData["SuccessMessage"]));
+            var errorMessage = @Html.Raw(Json.Serialize(TempData["ErrorMessage"]));
+
+            if (successMessage && successMessage !== '') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: successMessage,
+                    showConfirmButton: false,
+                    timer: 3000 // الـ alert هيختفي بعد 3 ثواني
+                }).then(() => { // استخدام arrow function لتسهيل القراءة
+                    // بعد ما الـ alert يختفي
+                    // هنقوم بعمل redirect لصفحة الليست
+                    window.location.href = '@Url.Action("ListItems", "Items")';
+                });
+            } else if (errorMessage && errorMessage !== '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage,
+                    showConfirmButton: false,
+                    timer: 3000 // الـ alert هيختفي بعد 3 ثواني
+                }).then(() => {
+                    // في حالة الخطأ، الأفضل غالبًا إن المستخدم يفضل في نفس الصفحة عشان يعدل.
+                    // لو عايزها ترجع للـ list برضه في حالة الخطأ، شيل الكومنت من السطر اللي تحت
+                    // window.location.href = '@Url.Action("ListItems", "Items")';
+                });
+            }
+        });
+    </script>
+
+    <script src="~/admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    @*
+    // تأكد إن المسارات دي صحيحة وموجودة في مشروعك
+    <script src="~/admin/assets/js/file-upload.js"></script>
+    <script src="~/admin/assets/js/typeahead.js"></script>
+    <script src="~/admin/assets/js/select2.js"></script>
+    *@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

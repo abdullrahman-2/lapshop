@@ -1,0 +1,236 @@
+﻿@model VwHomePage
+@section headLinks{
+<link href="~/FrontEnd/assets/img/favicon.png" rel="icon">
+<link href="~/FrontEnd/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link href="~/FrontEnd/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/FrontEnd/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<style>
+    .page-link {
+        background: black;
+    }
+
+    .product-image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 180px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #eee;
+    }
+
+        .product-image-container .no-image-icon {
+            font-size: 80px;
+            background-image: linear-gradient(45deg, var(--secondary-gradient-start), var(--secondary-gradient-end));
+        }
+
+    .product-card:hover .product-image-container .no-image-icon {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+
+    .filter-section {
+        margin-bottom: 30px;
+    }
+
+        .filter-section .form-control {
+            border-radius: 0.25rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        .filter-section .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+</style>
+}
+
+<section id="featured-products" class="featured-products section">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h3 class="section-title text-center mb-4">Explore Our Latest Tech Products</h3>
+        <p class="text-center text-muted mb-5">From powerful laptops to sleek phones, find what you need.</p>
+
+        <div class="row filter-section mb-5 justify-content-center">
+            <div class="col-md-6 col-lg-4 mb-3">
+                <label for="searchInput" class="form-label">Search by Name</label>
+                <input type="text" class="form-control" id="searchInput" placeholder="e.g., Laptop Pro">
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center" id="products-container">
+            @if (Model.AllItems == null || !Model.AllItems.Any())
+            {
+                <div class="col-12 text-center">
+                    <p>No products to display at the moment.</p>
+                </div>
+            }
+        </div>
+
+        ---
+
+        <div class="d-flex justify-content-center mt-4" data-aos="fade-up" data-aos-delay="200">
+            <nav aria-label="Page navigation example">
+                <ul style="color:black" class="pagination" id="pagination-links">
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+@section script {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/FrontEnd/assets/vendor/aos/aos.js"></script>
+    <script src="~/FrontEnd/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/FrontEnd/assets/js/main.js"></script>
+
+    <script>
+        var allItems = @Html.Raw(Json.Serialize(Model.AllItems));
+        let filteredItems = [...allItems];
+        const pageSize = 40;
+        const maxPagesToShow = 10;
+
+        function displayProducts(pageNumber) {
+            const productsContainer = $('#products-container');
+            productsContainer.empty();
+            const startIndex = (pageNumber - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const itemsToDisplay = filteredItems.slice(startIndex, endIndex);
+
+            if (itemsToDisplay.length === 0) {
+                productsContainer.html(`
+                    <div class="col-12 text-center">
+                        <p>No products to display on this page.</p>
+                    </div>
+                `);
+                return;
+            }
+
+            itemsToDisplay.forEach(item => {
+                const imageUrl = item.imagePath ? `@Url.Content("~/images/item/")` + item.imagePath : '';
+                const imageHtml = imageUrl ?
+                    `<img src="${imageUrl}" class="img-fluid product-img" alt="${item.itemName}">` :
+                    `<i class="bi bi-laptop no-image-icon"></i>`;
+
+                const productHtml = `
+                    <div class="col" data-aos="fade-up" data-aos-delay="100">
+                        <div class="product-card h-100">
+                            <a href="/admin/itemDeatails/DetailsOfItemView?itemId=${item.itemId}">
+                                <div class="product-image-container">
+                                    ${imageHtml}
+                                </div>
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="item-name">
+                                    <a href="/admin/itemDeatails/DetailsOfItemView?itemId=${item.itemId}">${item.itemName}</a>
+                                </h5>
+                                <p class="item-category text-muted">${item.categoryName}</p>
+                                <p class="item-price">${item.salesPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
+                                <a href="/admin/itemDeatails/DetailsOfItemView?itemId=${item.itemId}" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                productsContainer.append(productHtml);
+            });
+        }
+
+        function setupPagination(currentPage) {
+            const paginationLinksContainer = $('#pagination-links');
+            paginationLinksContainer.empty();
+            const totalPages = Math.ceil(filteredItems.length / pageSize);
+
+            const prevLi = `<li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+                                <a class="page-link" href="#" data-page="${currentPage - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                            </li>`;
+            paginationLinksContainer.append(prevLi);
+
+            let startPage, endPage;
+            if (totalPages <= maxPagesToShow) {
+                startPage = 1;
+                endPage = totalPages;
+            } else {
+                const middlePage = Math.ceil(maxPagesToShow / 2);
+                if (currentPage <= middlePage) {
+                    startPage = 1;
+                    endPage = maxPagesToShow;
+                } else if (currentPage + middlePage > totalPages) {
+                    startPage = totalPages - maxPagesToShow + 1;
+                    endPage = totalPages;
+                } else {
+                    startPage = currentPage - (middlePage - 1);
+                    endPage = currentPage + (middlePage - 1);
+                }
+            }
+
+            if (startPage > 1) {
+                paginationLinksContainer.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const li = `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                                <a class="page-link" href="#" data-page="${i}">${i}</a>
+                            </li>`;
+                paginationLinksContainer.append(li);
+            }
+
+            if (endPage < totalPages) {
+                paginationLinksContainer.append(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+            }
+
+            const nextLi = `<li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                                <a class="page-link" href="#" data-page="${currentPage + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                            </li>`;
+            paginationLinksContainer.append(nextLi);
+
+            paginationLinksContainer.find('.page-link').on('click', function(e) {
+                e.preventDefault();
+                const newPage = parseInt($(this).data('page'));
+                if (!$(this).parent().hasClass('disabled') && !isNaN(newPage) && newPage > 0 && newPage <= totalPages) {
+                    history.pushState({ page: newPage }, '', `?page=${newPage}`);
+                    displayProducts(newPage);
+                    setupPagination(newPage);
+                }
+            });
+        }
+
+        function applySearch() {
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            filteredItems = allItems.filter(item => {
+                return searchTerm === '' || item.itemName.toLowerCase().includes(searchTerm);
+            });
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('page', '1');
+            history.pushState({ page: 1 }, '', `?${urlParams.toString()}`);
+            displayProducts(1);
+            setupPagination(1);
+        }
+
+        $(document).ready(function() {
+            $('#searchInput').on('keyup', applySearch);
+            initPage();
+        });
+
+        function initPage() {
+            filteredItems = [...allItems];
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialPage = parseInt(urlParams.get('page')) || 1;
+            displayProducts(initialPage);
+            setupPagination(initialPage);
+        }
+
+        window.addEventListener('popstate', function(event) {
+            const pageFromState = event.state ? event.state.page : 1;
+            displayProducts(pageFromState);
+            setupPagination(pageFromState);
+        });
+    </script>
+}

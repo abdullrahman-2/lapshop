@@ -1,0 +1,355 @@
+﻿/* ==========================================================================
+   1. Global Reset and Box-Sizing
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   2. Root Variables for Theming
+   ========================================================================== */
+
+:root {
+    --primary-color: #007bff; /* More vibrant primary blue */
+    --primary-darker: #0056b3;
+    --secondary-color: #6c757d; /* Muted secondary gray */
+    --text-color-primary: #333;
+    --text-color-secondary: #666;
+    --background-color-light: #f8f9fa; /* Lighter background */
+    --background-color-dark: #212529; /* Darker background for headers/footers */
+    --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More common system font with fallback */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+    --border-radius-small: 5px;
+    --border-radius-medium: 10px;
+    --spacing-small: 10px;
+    --spacing-medium: 20px;
+    --spacing-large: 40px;
+    --transition-duration: 0.3s;
+    --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   3. Base Styles (HTML, Body)
+   ========================================================================== */
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for better UX */
+    font-size: 16px; /* Base font size for rem units */
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-regular);
+    background-color: var(--background-color-light);
+    color: var(--text-color-primary);
+    line-height: 1.6; /* Slightly adjusted line height */
+}
+
+/* ==========================================================================
+   4. Typography (Headings, Paragraphs, Links)
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    color: var(--background-color-dark); /* Using dark background color for headings */
+    margin-bottom: var(--spacing-small);
+    line-height: 1.2; /* Tighter line height for headings */
+}
+
+p {
+    margin-bottom: var(--spacing-medium);
+    color: var(--text-color-secondary); /* Slightly softer color for paragraphs */
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-duration) ease, text-decoration var(--transition-duration) ease;
+}
+
+    a:hover {
+        color: var(--primary-darker);
+        text-decoration: underline;
+    }
+
+/* ==========================================================================
+   5. Layout Specific Styles (Header, Navigation, Footer, Sections, Grid)
+   ========================================================================== */
+
+/* 5.1 Header Styles */
+header {
+    background-color: var(--background-color-dark);
+    color: #fff;
+    padding: var(--spacing-medium) var(--spacing-large);
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Adjusted z-index */
+    box-shadow: var(--shadow-medium);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Consistent max-width */
+    margin: 0 auto;
+}
+
+header .logo a {
+    font-size: 1.5rem; /* Using rem for better scalability */
+    font-weight: var(--font-weight-bold);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* 5.2 Navigation Styles */
+header nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-medium);
+}
+
+    header nav ul li a {
+        display: block; /* Makes the entire link clickable */
+        padding: var(--spacing-small) var(--spacing-medium);
+        border-radius: var(--border-radius-small);
+        font-weight: var(--font-weight-medium);
+        color: #fff;
+        transition: background-color var(--transition-duration) ease, color var(--transition-duration) ease;
+    }
+
+        header nav ul li a:hover,
+        header nav ul li a:focus { /* Added focus state for accessibility */
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+/* 5.3 Footer Styles */
+footer {
+    background-color: var(--background-color-dark);
+    color: #fff;
+    padding: var(--spacing-large) var(--spacing-medium);
+    text-align: center;
+    font-size: 0.875rem; /* Using rem */
+}
+
+    footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+        footer a:hover,
+        footer a:focus {
+            color: var(--primary-darker);
+            text-decoration: underline;
+        }
+
+/* 5.4 Section Styles */
+section {
+    padding: var(--spacing-large) var(--spacing-medium);
+    margin: var(--spacing-large) auto;
+    background-color: #fff;
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
+    max-width: 1200px;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-large);
+    text-align: center;
+    color: var(--text-color-primary);
+}
+
+/* 5.5 Grid Layout */
+.grid-container {
+    display: grid;
+    gap: var(--spacing-medium);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-item {
+    /* Add any specific styling for grid items here */
+}
+
+/* ==========================================================================
+   6. Component Specific Styles (Buttons, Images, Card)
+   ========================================================================== */
+
+/* 6.1 Button Styles */
+.button {
+    display: inline-block; /* Allows for easier alignment */
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: var(--spacing-small) var(--spacing-medium);
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 1rem; /* Using rem */
+    font-weight: var(--font-weight-medium);
+    text-decoration: none; /* To ensure no default link styles */
+    transition: background-color var(--transition-duration) ease, transform 0.2s ease;
+}
+
+    .button:hover,
+    .button:focus {
+        background-color: var(--primary-darker);
+        transform: scale(1.03); /* Slightly less aggressive scale */
+    }
+
+.button-secondary {
+    background-color: var(--secondary-color);
+}
+
+    .button-secondary:hover,
+    .button-secondary:focus {
+        background-color: #545b62;
+    }
+
+/* 6.2 Image Styles */
+img {
+    display: block; /* Prevents extra space below inline images */
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-small);
+}
+
+/* 6.3 Card Styles */
+.card-section {
+    background-color: #fff; /* لون خلفية الكارد */
+    border-radius: 8px; /* حواف مدورة للكارد */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ظل خفيف للكارد */
+    overflow: hidden; /* عشان الحواف المدورة تشتغل مع العناصر الداخلية */
+    width: 300px; /* عرض الكارد (ممكن تعدله) */
+    margin: 20px; /* مساحة حوالين الكارد (ممكن تعدله) */
+}
+
+.card-image {
+    width: 100%; /* الصورة هتاخد عرض الكونتينر بتاعها */
+    height: auto; /* الحفاظ على نسبة أبعاد الصورة */
+}
+
+    .card-image img {
+        display: block; /* عشان تتجنب أي مساحات إضافية تحت الصورة */
+        width: 100%;
+        height: auto;
+    }
+
+.card-content {
+    padding: 20px; /* مساحة داخلية للنصوص */
+    text-align: center; /* محاذاة النصوص في المنتصف (ممكن تعدلها) */
+}
+
+.card-title {
+    font-size: 1.5em; /* حجم العنوان */
+    margin-bottom: 10px;
+    color: #333; /* لون العنوان */
+}
+
+.card-description {
+    font-size: 1em; /* حجم الوصف */
+    color: #666; /* لون الوصف */
+    line-height: 1.5; /* تباعد الأسطر في الوصف */
+}
+
+/* ==========================================================================
+   7. Utility Classes
+   ========================================================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-small);
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-small);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-medium);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-medium);
+}
+/* Add more utility classes as needed */
+
+/* ==========================================================================
+   8. Media Queries
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px; /* Slightly smaller base font on smaller screens */
+    }
+
+    header {
+        padding: var(--spacing-medium);
+    }
+
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-small);
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: var(--spacing-small);
+        width: 100%;
+    }
+
+        header nav ul li a {
+            width: 100%;
+            text-align: center;
+        }
+
+    section {
+        padding: var(--spacing-medium);
+        margin: var(--spacing-medium) auto;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr; /* Stack items on smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 14px;
+    }
+
+    header .logo a {
+        font-size: 1.25rem;
+    }
+
+    button {
+        font-size: 0.875rem;
+        padding: 8px 16px;
+    }
+
+    footer {
+        padding: var(--spacing-medium);
+        font-size: 0.75rem;
+    }
+}

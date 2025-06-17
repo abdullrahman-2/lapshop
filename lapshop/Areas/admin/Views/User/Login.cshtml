@@ -1,0 +1,195 @@
+﻿@model UserModel
+
+@section headLinks {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        /* Custom Styles for Login Page - Add these to your CSS file (e.g., main.css or a dedicated auth.css) */
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            /* Keep original body styles if they are for global layout */
+            /* If you want the blue background to cover the whole page, remove this: */
+            /* min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center; */
+        }
+
+        /* The .container-fluid with bg-info bg-gradient will act as the full page background */
+        .login-page-wrapper {
+            background: linear-gradient(45deg, #17a2b8, #20c997); /* Adjusted gradient to blend info with a slightly warmer green for a modern look */
+            background-size: cover; /* Cover the entire area */
+            background-attachment: fixed; /* Keep background fixed when scrolling */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0; /* Add vertical padding */
+        }
+
+        .login-container {
+            max-width: 600px; /* Max width for the card on large screens, slightly less than register */
+            width: 90%; /* Take 90% width on smaller screens */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
+            padding: 20px; /* Padding around the card */
+        }
+
+        .card {
+            background-color: #ffffff; /* Card background is white/light */
+            border: 1px solid #e0e0e0; /* Light border */
+            border-radius: 0.75rem !important; /* Slightly more rounded */
+            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2) !important; /* Stronger shadow */
+            color: #333333; /* Dark text color for light card */
+            width: 100%; /* Ensure card takes full width of its parent */
+        }
+
+        .card-body {
+            padding: 3rem; /* More padding inside the card */
+        }
+
+        .card-title {
+            color: #17a2b8 !important; /* Bootstrap 'info' color for title */
+            font-size: 2.2rem; /* Larger title font */
+            margin-bottom: 2rem !important;
+            padding-bottom: 0.75rem !important;
+            border-bottom: 4px solid #17a2b8 !important; /* Thicker border, matching 'info' color */
+            display: inline-block; /* Ensure it takes full width for centering */
+            width: fit-content; /* Adjust width to content */
+            margin-left: auto !important; /* Center the title */
+            margin-right: auto !important; /* Center the title */
+        }
+
+        .form-label {
+            color: #333333 !important; /* Darker grey for labels on light card */
+            font-weight: 600 !important; /* Make labels bolder */
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control-lg {
+            background-color: #f8f9fa; /* Light input background */
+            border: 1px solid #ced4da; /* Standard input border */
+            color: #212529 !important; /* Dark text color for user input */
+            padding: 0.8rem 1.2rem; /* More padding for inputs */
+            font-size: 1.1rem; /* Larger font size for inputs */
+            border-radius: 0.5rem !important; /* More rounded inputs */
+            transition: all 0.3s ease;
+        }
+
+            .form-control-lg::placeholder {
+                color: #6c757d !important; /* Darker placeholder text for better visibility */
+                opacity: 1; /* Ensure full opacity */
+            }
+
+            .form-control-lg:focus {
+                background-color: #ffffff;
+                border-color: #5bc0de; /* Info color border on focus */
+                box-shadow: 0 0 0 0.25rem rgba(23, 162, 184, 0.25); /* Info color shadow on focus */
+            }
+
+        .text-danger {
+            color: #dc3545 !important; /* Bright red for validation errors */
+            font-size: 0.9rem !important; /* Slightly larger validation error text */
+            margin-top: 0.25rem !important;
+            display: block;
+            font-weight: 500;
+        }
+
+        .btn-info {
+            background-color: #17a2b8; /* Bootstrap 'info' color for the button */
+            border-color: #17a2b8;
+            font-size: 1.2rem; /* Larger button text */
+            padding: 0.8rem 1.5rem; /* More padding for the button */
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+            .btn-info:hover {
+                background-color: #138496; /* Darker 'info' on hover */
+                border-color: #117a8b;
+                transform: translateY(-2px); /* Slight lift on hover */
+            }
+
+        /* Adjust padding for the bottom of the form before the button */
+        .mb-5 {
+            margin-bottom: 2.5rem !important; /* Increase bottom margin for password field */
+        }
+
+        .text-muted.small {
+            font-size: 0.9rem !important; /* Ensure small text is readable */
+            color: #6c757d !important; /* Standard muted color */
+        }
+
+        .text-muted a {
+            color: #17a2b8 !important; /* Info color for "Forgot Password" link */
+            font-weight: 600;
+        }
+
+        .text-info.fw-semibold.small {
+            color: #17a2b8 !important; /* Info color for "Register Now" link */
+            font-weight: 600 !important;
+        }
+
+        .text-muted a:hover, .text-info a:hover {
+            text-decoration: underline !important;
+        }
+
+        /* Animate.css adjustments */
+        .animate__fadeInUp {
+            animation-duration: 0.8s;
+        }
+
+        .animate__pulse {
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+}
+
+<div class="login-page-wrapper">
+    <div class="login-container">
+        <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <h2 class="card-title text-center fw-bold">Login</h2>
+                @* Display any error messages from the controller *@
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger text-center mb-4" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                <form method="post" asp-controller="User" asp-action="LoginAction">
+                    <input asp-for="ReturnUrl" type="hidden">
+                    <div class="mb-4">
+                        <label asp-for="EmailAddress" class="form-label">Email Address</label>
+                        <input asp-for="EmailAddress" type="email" class="form-control form-control-lg" placeholder="Enter your email address" required>
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="mb-5">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Enter your password" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-lg w-100 rounded-pill shadow animate__animated animate__pulse animate__infinite">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-decoration-none text-muted small">Forgot Password?</a>
+                    </div>
+                    <div class="text-center mt-3">
+                        <span class="text-muted small">Don't have an account? </span>
+                        <a asp-controller="User" asp-action="Register" class="text-decoration-none text-info fw-semibold small">Register Now</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

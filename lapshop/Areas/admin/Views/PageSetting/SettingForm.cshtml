@@ -1,0 +1,82 @@
+﻿@model TbSetting
+
+<div class="col-12 grid-margin stretch-card d-flex justify-content-center">
+    <div class="card" style="width: 800px;">
+        <div class="card-body">
+            <h4 class="card-title text-center">Edit Website Settings</h4>
+            <p class="card-description text-center">Make changes to your website's settings below.</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" enctype="multipart/form-data" asp-controller="PageSetting" asp-action="EditSetting" class="form-horizontal">
+                        <input type="hidden" asp-for="SettingId" />
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Name:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Description:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Description" type="text" class="form-control" placeholder="Description" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Email:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Address:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Adress" type="text" class="form-control" placeholder="Address" />
+                                <span asp-validation-for="Adress" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Phone Number:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="Phone Number" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-2">
+                            <label class="col-sm-3 col-form-label font-weight-bold">Facebook Link:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="FaceBook" type="text" class="form-control" placeholder="Facebook Link" />
+                                <span asp-validation-for="FaceBook" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <button type="submit" class="btn btn-primary mb-2">Save Changes</button>
+                            <button type="reset" class="btn btn-secondary mb-2">New</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="~/admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="~/admin/assets/js/file-upload.js"></script>
+    <script src="~/admin/assets/js/typeahead.js"></script>
+    <script src="~/admin/assets/js/select2.js"></script>
+
+    @* Very important for enabling client-side validation *@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

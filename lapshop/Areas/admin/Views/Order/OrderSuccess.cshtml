@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Order Confirmed";
+    Layout = "_Layout";
+}
+
+@section headLinks {
+    <link href="~/FrontEnd/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+    }
+
+    #confirmation-page-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .checkmark-icon {
+        font-size: 5rem;
+        color: var(--bs-success);
+        animation: fadeInScale 0.8s ease-out forwards;
+    }
+
+    @@keyframes fadeInScale {
+        from
+
+    {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    }
+</style>
+}
+<div id="confirmation-page-container">
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-lg">
+                    <div class="checkmark-icon mb-4">
+                        &#10004;
+                    </div>
+                    <h1 class="display-5 fw-bold text-dark mb-3">Order Confirmed Successfully!</h1>
+                    <p class="lead text-secondary mb-4">
+                        Thank you for your trust in us. Your order has been successfully received and will be processed as soon as possible.
+                        You will receive an email containing your order details and tracking number upon shipment.
+                    </p>
+                    <div class="d-grid gap-3 col-sm-8 col-md-6 mx-auto">
+                        <a href="@Url.Action("TrackOrder", "Order")" class="btn btn-primary btn-lg">Track Your Order</a>
+                        <a asp-action="AllProducts" asp-controller="Home" class="btn btn-outline-secondary btn-lg">Back to Homepage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="~/FrontEnd/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+}

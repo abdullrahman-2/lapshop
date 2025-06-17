@@ -1,0 +1,188 @@
+﻿@model UserModel
+
+@{
+    // Optional: If you have a layout that already includes Bootstrap and Animate.css,
+    // you might not need to include them again in the @section script.
+    // However, keeping them here ensures they are loaded if not in layout.
+    // Make sure your main layout doesn't load them twice.
+}
+
+<style>
+    /* Custom Styles for Register Page - Add these to your CSS file (e.g., main.css or a dedicated auth.css) */
+
+    .page-wrapper {
+        min-height: 100vh; /* Ensure it takes full viewport height */
+        padding-top: 50px; /* Example: space from top (header) */
+        padding-bottom: 50px; /* Example: space before footer */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align to top, not center, to allow footer space */
+    }
+
+    .register-container {
+        max-width: 700px; /* Increased max-width for the form card */
+        width: 90%; /* Take 90% width on smaller screens */
+        margin-left: auto; /* Center horizontally */
+        margin-right: auto; /* Center horizontally */
+        padding: 20px; /* Padding around the card */
+    }
+
+    .card {
+        background-color: #ffffff; /* Assuming original card is white/light */
+        border: 1px solid #e0e0e0; /* Original light border */
+        border-radius: 0.5rem; /* Standard Bootstrap border-radius */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Standard shadow */
+        color: #333333; /* Standard dark text color for light card */
+        width: 100%; /* Ensure card takes full width of its parent (.register-container) */
+    }
+
+    .card-body {
+        padding: 2.5rem; /* Slightly more padding inside the card for spaciousness */
+    }
+
+    .card-title {
+        color: #007bff !important; /* Example primary blue, or adjust to your specific purple/blue */
+        font-size: 2rem; /* Adjusted title font size */
+        margin-bottom: 2rem !important;
+        padding-bottom: 0.75rem !important;
+        border-bottom: 3px solid #007bff !important; /* Match title color */
+        display: inline-block; /* Keep inline-block if you want it to wrap content */
+        margin-left: auto; /* Center the title */
+        margin-right: auto; /* Center the title */
+        width: fit-content; /* Make border only as wide as content */
+    }
+
+    .form-label {
+        color: #333333 !important; /* Darker grey for labels on light card */
+        font-weight: 600 !important; /* Make labels bolder */
+        margin-bottom: 0.5rem;
+        display: block; /* Ensure label takes full width */
+    }
+
+    .form-control-lg {
+        background-color: #f8f9fa; /* Light input background */
+        border: 1px solid #ced4da; /* Standard input border */
+        color: #212529 !important; /* VERY IMPORTANT: Darker text color for user input */
+        padding: 0.75rem 1rem; /* Standard padding for larger inputs */
+        font-size: 1.05rem; /* Slightly larger font size for inputs */
+        border-radius: 0.3rem; /* Standard Bootstrap border-radius */
+        transition: all 0.3s ease;
+    }
+
+        .form-control-lg::placeholder {
+            color: #6c757d !important; /* Darker placeholder text for better visibility */
+            opacity: 1; /* Ensure full opacity */
+        }
+
+        .form-control-lg:focus {
+            background-color: #ffffff;
+            border-color: #80bdff; /* Bootstrap focus blue, or adjust to your theme */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    .form-text {
+        color: #6c757d !important; /* Standard grey for help text */
+        font-size: 0.8rem !important;
+        margin-top: 0.5rem;
+    }
+
+    .text-danger {
+        color: #dc3545 !important; /* VERY IMPORTANT: Bright red for validation errors */
+        font-size: 0.875rem !important; /* Standard validation error text size */
+        margin-top: 0.25rem !important;
+        display: block; /* Ensure it takes full width below input */
+        font-weight: 500; /* Make error text slightly bolder */
+    }
+
+    .btn-success {
+        background-color: #28a745; /* Standard Bootstrap green for success */
+        border-color: #28a745;
+        font-size: 1.1rem; /* Slightly smaller button text as requested */
+        padding: 0.7rem 1.2rem; /* Smaller padding for the button */
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green on hover */
+            border-color: #1e7e34;
+            transform: none; /* Remove the lift on hover */
+        }
+
+    .mb-5 {
+        margin-bottom: 2.5rem !important; /* Increase bottom margin for password field */
+    }
+
+    .text-muted a {
+        color: #6a0dad !important; /* Purple link for "Already have an account?" */
+        font-weight: 600;
+    }
+
+        .text-muted a:hover {
+            text-decoration: underline !important;
+        }
+
+    /* Animate.css adjustments - keep if you like the animation */
+    .animate__animated.animate__fadeInUp {
+        animation-duration: 0.8s;
+    }
+
+    .animate__animated.animate__pulse {
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+</style>
+
+@* Ensure your main layout defines the structure including sidebar, header, and footer *@
+@* This div assumes it's placed within the main content area of your layout *@
+<div class="page-wrapper">
+    <div class="register-container">
+        <div class="card shadow-lg border-0 rounded-4 animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <h2 class="card-title text-center fw-bold">Join Us</h2>
+                <form method="post" asp-controller="User" asp-action="RegisterAction" enctype="multipart/form-data">
+                    @* Display any error messages from the controller *@
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="alert alert-danger text-center mb-4" role="alert">
+                            @ViewBag.ErrorMessage
+                        </div>
+                    }
+
+                    <div class="mb-4">
+                        <label asp-for="FirstName" class="form-label">First Name</label>
+                        <input asp-for="FirstName" type="text" class="form-control form-control-lg" placeholder="Enter your first name" required>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="LastName" class="form-label">Last Name</label>
+                        <input asp-for="LastName" type="text" class="form-control form-control-lg" placeholder="Enter your last name" required>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="EmailAddress" class="form-label">Email Address</label>
+                        <input asp-for="EmailAddress" type="email" class="form-control form-control-lg" placeholder="Enter your email address" aria-describedby="emailHelp" required>
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="mb-5">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control form-control-lg" placeholder="Enter your password" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 rounded-pill shadow-sm animate__animated animate__pulse animate__infinite">Register</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">Already have an account? <a href="@Url.Action("Login", "User")" class="text-decoration-none">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    @* Bootstrap JS and Animate.css LINK are typically loaded once in _Layout.cshtml *@
+}

@@ -1,0 +1,163 @@
+﻿@model TbSetting
+
+@section headLinks {
+    <link href="~/FrontEnd/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+}
+
+<style>
+    html, body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #about-us-content {
+        flex: 1;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        background-color: #f8f9fa;
+    }
+
+    .section-title {
+        position: relative;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #343a40;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .section-title h2::after {
+                content: "";
+                position: absolute;
+                display: block;
+                width: 60px;
+                height: 3px;
+                background: #007bff;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .team-member:hover img {
+        transform: scale(1.05);
+    }
+</style>
+
+<div id="about-us-content">
+    <div class="container">
+        <section id="about" class="mb-5">
+            <div class="section-title mb-5">
+                <h2>About <span class="text-primary">@Model.Name</span></h2>
+                <p class="text-muted lead">Learn more about our mission, vision, and values.</p>
+            </div>
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://via.placeholder.com/600x400/007bff/ffffff?text=Our+Story" class="img-fluid rounded shadow-sm" alt="Our Story Image">
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-3 text-dark">Our Story</h3>
+                    <p class="text-secondary lead-sm">
+                        @Model.Description
+                    </p>
+                    <p class="text-secondary lead-sm">
+                        Our journey has been defined by continuous learning, innovation, and a relentless pursuit of excellence.
+                        We believe in creating a seamless shopping experience, offering a diverse range of products,
+                        and building lasting relationships with our community.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-lg-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 d-flex flex-column justify-content-between">
+                        <div class="text-primary mb-3" style="font-size: 2.5rem;"><i class="bi bi-eye"></i></div>
+                        <h4 class="fw-bold text-dark mb-2">Our Vision</h4>
+                        <p class="text-secondary">To be the leading online destination for electronics, empowering individuals and businesses with cutting-edge technology.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 d-flex flex-column justify-content-between">
+                        <div class="text-success mb-3" style="font-size: 2.5rem;"><i class="bi bi-bullseye"></i></div>
+                        <h4 class="fw-bold text-dark mb-2">Our Mission</h4>
+                        <p class="text-secondary">To offer a curated selection of reliable products, provide exceptional customer support, and foster a community of tech enthusiasts.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 d-flex flex-column justify-content-between">
+                        <div class="text-warning mb-3" style="font-size: 2.5rem;"><i class="bi bi-star"></i></div>
+                        <h4 class="fw-bold text-dark mb-2">Our Values</h4>
+                        <p class="text-secondary">Integrity, innovation, customer-centricity, and a commitment to quality define everything we do.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-info" class="text-center py-5 bg-primary text-white rounded-3 shadow-lg">
+            <h2 class="display-5 fw-bold mb-3">Connect With Us!</h2>
+            <p class="lead mb-4">We're always here to help. Reach out through any of these channels:</p>
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-8">
+                    <ul class="list-unstyled d-flex flex-wrap justify-content-center gap-4 fs-5">
+                        @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                        {
+                            <li><i class="bi bi-phone-fill me-2"></i> @Model.PhoneNumber</li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Email))
+                        {
+                            <li><i class="bi bi-envelope-fill me-2"></i> @Model.Email</li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Adress))
+                        {
+                            <li><i class="bi bi-geo-alt-fill me-2"></i> @Model.Adress</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.FaceBook))
+            {
+                <h4 class="fw-bold mb-3">Follow Us on Social Media:</h4>
+                <a href="@Model.FaceBook" target="_blank" class="btn btn-light btn-lg d-inline-flex align-items-center">
+                    <i class="bi bi-facebook me-2 fs-4"></i> Facebook
+                </a>
+            }
+        </section>
+    </div>
+</div>
+
+@section script {
+    <script src="~/FrontEnd/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/aos/aos.js"></script>
+    <script src="~/FrontEnd/assets/js/main.js"></script>
+    <script>
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            });
+        }
+    </script>
+}

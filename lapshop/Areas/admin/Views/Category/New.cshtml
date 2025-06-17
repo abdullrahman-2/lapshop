@@ -1,0 +1,61 @@
+﻿  @model TbCategory
+
+<div  class=" col-12 grid-margin stretch-card d-flex justify-content-center">
+    <div class="card" style="width: 800px;">
+        <div  class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" enctype="multipart/form-data" asp-controller="Category" asp-action="save"  class="form-inline">
+                        <input asp-for="CategoryName" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2">
+                        <span asp-validation="CategoryName"></span>
+                        <label class="sr-only" for="inlineFormInputGroupUsername2">@generalResours.lblCategory</label>
+                       <input type="hidden" asp-for="CategoryId"  />
+                        <input type="hidden" asp-for="CreatedBy" />
+                        <input type="hidden" asp-for="CreatedDate" />
+
+
+                        <div class="input-group mb-2 mr-sm-2">
+                            <input name="files" asp-for="ImageName" type="file" class="form-control" id="inlineFormInputGroupUsername2" placeholder="@generalResours.lblImage" onchange="displayImage(this)">
+                        </div>
+                        <div class="input-group mb-2 mr-sm-2">
+                            <input type="checkbox" asp-for="ShowInHomePage" checked="@Model.ShowInHomePage" name="s" value="" />
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary mb-2">@generalResours.lblSave</button>
+                        <button type="submit" class="btn btn-primary mb-2">@generalResours.lblNew</button>
+                    </form>
+                </div>
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img src="@Model.ImageName" alt="Alternate Text" style="max-width: 50%; height: 60%; border: 1px solid #ddd; border-radius: 4px; padding: 5px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        @section script{
+
+            <script>
+                               function displayImage(fileInput) {
+          if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+              var imagePreview = document.querySelector('.col-md-6:last-child img');
+              imagePreview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(fileInput.files[0]);
+          }
+        }
+            </script>
+     
+
+
+    <script src="~/admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="~/admin/assets/js/file-upload.js"></script>
+    <script src="~/admin/assets/js/typeahead.js"></script>
+    <script src="~/admin/assets/js/select2.js"></script>   
+        
+        }                

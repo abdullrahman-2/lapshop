@@ -1,0 +1,472 @@
+﻿@model VwHomePage
+
+@section headLinks{
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Lap Shop - Your Tech Destination</title>
+    <meta name="description" content="Lap Shop - Your ultimate destination for laptops, phones, and electronics at unbeatable prices.">
+    <meta name="keywords" content="laptops, phones, electronics, online store, buy online, great deals">
+
+    <link href="~/FrontEnd/assets/img/favicon.png" rel="icon">
+    <link href="~/FrontEnd/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <link href="~/FrontEnd/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/FrontEnd/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <link href="~/FrontEnd/assets/css/main.css" rel="stylesheet">
+
+    <style>
+        .hero-title {
+            color: #007bff; /* A nice blue for titles */
+        }
+
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex; /* Flexbox for alignment */
+            flex-direction: column; /* Stack content vertically */
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            }
+
+            .product-card .product-image-container {
+                width: 100%;
+                height: 200px; /* Fixed height for product images */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #f8f9fa;
+                padding: 10px;
+            }
+
+                .product-card .product-image-container img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain; /* Ensures the image fits without cropping */
+                }
+
+                .product-card .product-image-container .no-image-icon {
+                    font-size: 5em; /* Larger icon */
+                    color: #ccc; /* Lighter color for placeholder */
+                }
+
+            .product-card .card-body {
+                padding: 15px;
+                flex-grow: 1; /* Allow body to take available space */
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between; /* Push button to bottom */
+            }
+
+            .product-card .item-name {
+                font-weight: 600;
+                margin-bottom: 5px;
+                color: #333;
+            }
+
+            .product-card .item-price {
+                font-size: 1.1em;
+                color: #28a745; /* Green for prices */
+                font-weight: bold;
+                margin-bottom: 10px; /* Space before button */
+            }
+
+        .category-item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+            height: 100%; /* Ensure consistent height for cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .category-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            }
+
+            .category-item .category-icon {
+                font-size: 3em;
+                color: #007bff;
+                margin-bottom: 15px;
+            }
+
+            .category-item h3 {
+                font-size: 1.3em;
+                color: #333;
+                margin-bottom: 0;
+            }
+
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+        }
+
+            .recommendation-item:hover {
+                background-color: #f8f9fa;
+                transform: translateX(5px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+
+            .recommendation-item .item-image-container {
+                width: 80px;
+                height: 80px;
+                margin-right: 15px;
+                border-radius: 4px;
+                background-color: #f8f9fa;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+            }
+
+                .recommendation-item .item-image-container img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: cover;
+                }
+
+                .recommendation-item .item-image-container .no-image-icon {
+                    font-size: 2.5em; /* Smaller icon for recommended items */
+                    color: #ccc;
+                }
+
+            .recommendation-item .item-details {
+                flex-grow: 1; /* Allow details to take available space */
+            }
+
+                .recommendation-item .item-details h4 {
+                    margin: 0 0 5px 0;
+                    font-size: 1.1em;
+                    color: #007bff;
+                }
+
+                .recommendation-item .item-details p {
+                    margin: 0;
+                    font-size: 0.9em;
+                    color: #666;
+                }
+
+                .recommendation-item .item-details .price {
+                    font-weight: bold;
+                    color: #28a745;
+                    margin-top: 5px;
+                }
+    </style>
+    }
+
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+
+            <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+                <h1 class="sitename">Lap Shop</h1><span>.</span>
+            </a>
+
+            <a class="btn-getstarted" asp-action="AllProducts" asp-controller="Home">Browse All Products</a>
+
+        </div>
+    </header>
+
+    <main class="main">
+
+        <section id="hero" class="hero section">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row align-items-center mb-5">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <div class="badge-wrapper mb-3">
+                            <div class="d-inline-flex align-items-center rounded-pill border border-accent-light">
+                                <div class="icon-circle me-2">
+                                    <i class="bi bi-star"></i>
+                                </div>
+                                <span class="badge-text me-3">Best Deals & Latest Gadgets</span>
+                            </div>
+                        </div>
+
+                        <h1 class="hero-title mb-4">@Model.TbSetting.Description</h1>
+
+                        <p class="hero-description mb-4">
+                            At Lap Shop, we offer a wide range of the latest electronic devices at the best prices. Whether you're looking for a powerful laptop for work, a new smartphone, or any other electronic device, you'll find it here.
+                        </p>
+
+                        <div class="cta-wrapper">
+                            <a asp-action="AllProducts" asp-controller="Home" class="btn btn-primary">Browse All Products</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="hero-image">
+                            <img src="~/Uploads/hero.jpeg" alt="Modern electronic devices" class="img-fluid" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row feature-boxes">
+                    <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-box">
+                            <div class="feature-icon me-sm-4 mb-3 mb-sm-0">
+                                <i class="bi bi-truck"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Fast & Reliable Delivery</h3>
+                                <p class="feature-text">We ensure your order arrives quickly and safely at your doorstep.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-box">
+                            <div class="feature-icon me-sm-4 mb-3 mb-sm-0">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Original Products with Warranty</h3>
+                                <p class="feature-text">All our products are original and come with manufacturer warranty for your peace of mind.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-box">
+                            <div class="feature-icon me-sm-4 mb-3 mb-sm-0">
+                                <i class="bi bi-headset"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3 class="feature-title">Dedicated Customer Support</h3>
+                                <p class="feature-text">Our support team is ready to answer all your questions and assist you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="featured-products" class="featured-products section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Latest Products</h2>
+                <p>Discover the newest additions to our collection of laptops, phones, and electronic devices.</p>
+            </div><div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+                    @if (Model.AllItems != null && Model.AllItems.Any())
+                    {
+                        @foreach (var item in Model.AllItems)
+                        {
+                            <div class="col" data-aos="fade-up" data-aos-delay="100">
+                                <div class="product-card h-100">
+                                    <a asp-controller="itemDeatails" asp-action="DetailsOfItemView" asp-route-itemId="@item.ItemId">
+                                        <div class="product-image-container">
+                                            <i class="bi bi-laptop no-image-icon"></i>
+                                        </div>
+                                    </a>
+                                    <div class="card-body text-center">
+                                        <h5 class="item-name">
+                                            <a asp-controller="itemDeatails" asp-action="DetailsOfItemView" asp-route-itemId="@item.ItemId">@item.ItemName</a>
+                                        </h5>
+                                        <p class="item-category text-muted">@item.CategoryName</p>
+                                        <p class="item-price">@item.SalesPrice.ToString("C")</p>
+                                        <a href="@Url.Action("DetailsOfItemView", "itemDeatails", new { itemId = item.ItemId })" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-12 text-center">
+                            <p>No products to display at the moment.</p>
+                        </div>
+                    }
+                </div>
+                <div class="text-center mt-5">
+                    <a href="@Url.Action("Index", "AllProducts")" class="btn btn-lg btn-primary">Browse All Products <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+        <section id="product-categories" class="product-categories section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Explore Our Categories</h2>
+                <p>Browse our wide range of products by category, from powerful laptops to the latest smartphones.</p>
+            </div><div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row justify-content-center g-4">
+                    @if (Model.Categories != null && Model.Categories.Any())
+                    {
+                        @foreach (var category in Model.Categories)
+                        {
+                            <div class="col-md-6 col-lg-4" data-aos="fade-right" data-aos-delay="100">
+                                <a href="@Url.Action("ProductsByCategory", "Products", new { categoryId = category.CategoryId })" class="category-item d-flex flex-column justify-content-center align-items-center">
+                                    <div class="category-icon">
+                                        <i class="bi bi-grid"></i>
+                                    </div>
+                                    <h3>@category.CategoryName</h3>
+                                </a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-12 text-center">
+                            <p>No categories to display at the moment.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section><section id="recommended-products" class="recommended-products section">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Recommended For You</h2>
+                <p>Discover our hand-picked selection of the best laptops, phones, and electronic devices you might love.</p>
+            </div>
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="recommendations-list">
+                            @if (Model.RecomendeItems != null && Model.RecomendeItems.Any())
+                            {
+                                @foreach (var recommended in Model.RecomendeItems)
+                                {
+                                    <div class="recommendation-item" data-aos="fade-up" data-aos-delay="200">
+                                        <a asp-controller="itemDeatails" asp-action="DetailsOfItemView" asp-route-itemId="@recommended.ItemId">
+                                            <div class="item-image-container">
+                                                <i class="bi bi-box no-image-icon"></i>
+                                            </div>
+                                        </a>
+                                        <div class="item-details">
+                                            <h4><a asp-controller="itemDeatails" asp-action="DetailsOfItemView" asp-route-itemId="@recommended.ItemId">@recommended.ItemName</a></h4>
+                                            <p>Category: @recommended.CategoryName</p>
+                                            <p class="price">Price: @recommended.SalesPrice.ToString("C")</p>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="col-12 text-center">
+                                    <p>No recommended products to display at the moment.</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer light-background">
+
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="/" class="logo d-flex align-items-center">
+                        <span class="sitename">@Model.TbSetting.Name</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>123 Tech Street</p>
+                        <p>@Model.TbSetting.Adress</p>
+                        <p class="mt-3"><strong>Phone:</strong> <span>@Model.TbSetting.PhoneNumber</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href="@Model.TbSetting.FaceBook"><i class="bi  bi-facebook"></i></a>
+                        <p><strong>Email:</strong> <span>@Model.TbSetting.Email</span></p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#product-categories">Our Categories</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Our Products</h4>
+                    <ul>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Phones</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Tablets</a></li>
+                        <li><a href="#">Monitors</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Customer Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>My Account</h4>
+                    <ul>
+                        <li><a href="#">Login</a></li>
+                        <li><a href="#">Register</a></li>
+                        <li><a href="#">Cart</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                        <li><a href="#">Account Settings</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">Lap Shop</strong> <span>All Rights Reserved</span></p>
+            <div class="credits">
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+        </div>
+
+   
+        
+
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader"></div>
+
+   @section script{
+    <script src="~/FrontEnd/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/php-email-form/validate.js"></script>
+    <script src="~/FrontEnd/assets/vendor/aos/aos.js"></script>
+    <script src="~/FrontEnd/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/FrontEnd/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="~/FrontEnd/assets/js/main.js"></script>
+
+
+    }

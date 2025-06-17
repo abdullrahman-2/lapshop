@@ -1,0 +1,165 @@
+﻿@model VmItemDetails
+
+@section headLinks {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" integrity="sha384-PHTyWNmAHltxg0Pcg6lkQageJMXHGw0ouQm0DQqAwbRQEOedknmPIBThjQW5qDT2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+        }
+        /* Style to make thumbnail images clickable and slightly interactive */
+        .img-thumbnail {
+            transition: transform 0.2s ease-in-out;
+            border: 1px solid #ddd; /* Add a light border to thumbnails */
+            cursor: pointer; /* Indicate clickability */
+        }
+
+            .img-thumbnail:hover {
+                transform: scale(1.05);
+                border-color: #007bff; /* Change border color on hover */
+            }
+        /* Adjust text colors for clarity on light background */
+        .text-dark-custom {
+            color: #212529 !important; /* Dark color for primary text */
+        }
+
+        .text-muted-custom {
+            color: #6c757d !important; /* Muted color for secondary text */
+        }
+        /* Enhancements for consistent card height in related products */
+        .card.h-100 {
+            display: flex;
+            flex-direction: column;
+            border: none; /* Remove default card border */
+        }
+
+        .card-body {
+            flex-grow: 1; /* Allow body to take available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content within the body */
+            padding: 1rem; /* Inner padding for card body */
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 150px; /* Fixed height for related product images */
+            object-fit: cover; /* Ensure image covers space without distortion */
+            border-bottom: 1px solid #eee; /* Light separator between image and content */
+        }
+
+        .card-title, .card-text, .text-warning.small {
+            margin-bottom: 0.5rem; /* Consistent spacing between elements */
+        }
+
+        .card-body .btn {
+            margin-top: auto; /* Push button to the bottom of the card for consistent height */
+        }
+    </style>
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 bg-white rounded shadow p-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="/Uploads/@Model.Items.ImageName" alt="Product Image" class="img-fluid rounded mb-3" id="mainProductImage">
+                    <div class="d-flex justify-content-center">
+                        <img src="https://via.placeholder.com/80/f00/fff" alt="Thumbnail 1" class="img-thumbnail me-2" onclick="document.getElementById('mainProductImage').src=this.src;">
+                        <img src="https://via.placeholder.com/80/0f0/fff" alt="Thumbnail 2" class="img-thumbnail me-2" onclick="document.getElementById('mainProductImage').src=this.src;">
+                        <img src="https://via.placeholder.com/80/00f/fff" alt="Thumbnail 3" class="img-thumbnail" onclick="document.getElementById('mainProductImage').src=this.src;">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="fw-bold mb-3 text-dark-custom">@Model.Items.ItemName</h2>
+                    <p class="text-muted-custom mb-2"><strong>Category:</strong> @Model.Items.CategoryName</p>
+                    <p class="mb-3">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                        <i class="far fa-star text-warning"></i>
+                        <span class="ms-2 badge bg-secondary">4.3</span>
+                    </p>
+                    <h4 class="fw-bold text-success mb-3">$@Model.Items.SalesPrice</h4>
+                    <p class="mb-3 text-dark-custom">
+                        @Model.Items.Description
+                    </p>
+                    <div class="d-grid gap-2 mb-3">
+                        <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@Model.Items.ItemId" class="btn btn-primary btn-lg"><i class="fas fa-shopping-cart me-2"></i> Buy Now</a>
+                        <button class="btn btn-outline-secondary btn-sm"><i class="far fa-heart me-2"></i> Add to Wishlist</button>
+                    </div>
+                    <p class="text-success text-dark-custom"><i class="fas fa-check-circle me-2"></i> In Stock</p>
+                    <p class="text-info text-dark-custom"><i class="fas fa-shipping-fast me-2"></i> Fast and Free Shipping</p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div>
+                <h5 class="fw-bold mb-3 text-dark-custom">Additional Details</h5>
+                <ul class="list-unstyled text-dark-custom">
+                    <li class="mb-2"><i class="fas fa-check-double text-primary me-2"></i> Excellent material and high quality.</li>
+                    <li class="mb-2"><i class="fas fa-ruler-horizontal text-info me-2"></i> Available Sizes: S, M, L, XL.</li>
+                    <li class="mb-2"><i class="fas fa-palette text-success me-2"></i> Colors: Black, White, Blue, Red.</li>
+                    <li class="mb-2"><i class="fas fa-box-open text-warning me-2"></i> Includes: Main product, user manual.</li>
+                    <li class="mb-2"><i class="fas fa-microchip text-danger me-2"></i> Processor (CPU): @Model.Items.Processor</li>
+                    <li class="mb-2"><i class="fas fa-memory text-secondary me-2"></i> RAM Size: @Model.Items.RamSize</li>
+                    <li class="mb-2"><i class="fas fa-hdd text-dark me-2"></i> Hard Disk (HDD/SSD): @Model.Items.HardDisk</li>
+                    <li class="mb-2"><i class="fas fa-desktop text-primary me-2"></i> Graphics Card (GPU): @Model.Items.Gpu</li>
+                    <li class="mb-2"><i class="fas fa-expand text-info me-2"></i> Screen Resolution: @Model.Items.ScreenReslution</li>
+                    <li class="mb-2"><i class="fas fa-mobile-alt text-success me-2"></i> Screen Size: @Model.Items.ScreenSize</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-8 bg-white rounded shadow p-4 mt-4">
+            <h4 class="fw-bold mb-4 text-dark-custom">Similar Products You Might Like</h4>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                @foreach (var relatedItem in Model.RelatedItems)
+                {
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="/Uploads/@relatedItem.ImageName" class="card-img-top rounded-top" alt="Similar product image of @relatedItem.ItemName">
+                            <div class="card-body text-center">
+                                <h6 class="card-title fw-bold text-dark-custom">@relatedItem.ItemName</h6>
+                                <p class="card-text text-muted-custom">Category: @relatedItem.CategoryName</p>
+                                <div class="text-warning small mb-2">
+                                    @{
+                                        // If you have AvgRating in VwItem, you can use it here
+                                        // For example: double avgRating = relatedItem.AvgRating;
+                                        double avgRating = 4.0; // Default value for testing
+                                                                // Make sure to fetch the actual rating from relatedItem if available
+
+                                        for (int i = 0; i < (int)Math.Floor(avgRating); i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        if (avgRating % 1 != 0) // If there's a decimal (half star)
+                                        {
+                                            <i class="fas fa-star-half-alt"></i>
+                                        }
+                                        for (int i = 0; i < (5 - (int)Math.Ceiling(avgRating)); i++)
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                    <span class="ms-1">(@(avgRating.ToString("0.0")))</span>
+                                </div>
+                                <h5 class="fw-bold text-primary mb-3">$@relatedItem.SalesPrice</h5>
+                                <a asp-controller="Order" asp-action="AddToCart" asp-route-itemId="@relatedItem.ItemId" class="btn btn-sm btn-outline-primary">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhG5nbyIjg0MTriLFhdwIjo9WaYkizs+N" crossorigin="anonymous"></script>}

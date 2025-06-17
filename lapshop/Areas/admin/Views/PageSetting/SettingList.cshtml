@@ -1,0 +1,152 @@
+﻿@model TbSetting
+
+@section headLinks {
+    <style>
+        .card-settings {
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .card-body-settings {
+            padding: 3rem;
+        }
+
+        .card-title-settings {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-description-settings {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .setting-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed #dee2e6;
+            padding-bottom: 1.5rem;
+        }
+
+            .setting-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+        .setting-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 1rem;
+        }
+
+        .setting-value {
+            font-size: 1rem;
+            color: #212529;
+            word-wrap: break-word;
+        }
+
+        .btn-edit-settings {
+            padding: 0.8rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+            .btn-edit-settings:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+            }
+    </style>
+}
+
+<div class="content-wrapper d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card card-settings">
+        <div class="card-body card-body-settings">
+            <h4 class="card-title text-center card-title-settings">Website Settings Overview</h4>
+            <p class="card-description text-center card-description-settings">
+                Dive into your website's core configurations. Everything you need to manage, right here.
+            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Website Name:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            <strong>@Model.Name</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Description:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            @Model.Description
+                        </div>
+                    </div>
+
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Contact Email:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            <a href="mailto:@Model.Email" class="text-decoration-none text-primary">@Model.Email</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Physical Address:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            @Model.Adress
+                        </div>
+                    </div>
+
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Phone Number:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            <a href="tel:@Model.PhoneNumber" class="text-decoration-none text-primary">@Model.PhoneNumber</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group row setting-item">
+                        <label class="col-sm-3 col-form-label setting-label">Facebook Page:</label>
+                        <div class="col-sm-9 col-form-label setting-value">
+                            @if (!string.IsNullOrEmpty(Model.FaceBook))
+                            {
+                                <a href="@Model.FaceBook" target="_blank" class="text-decoration-none text-primary">
+                                    <i class="fab fa-facebook me-2"></i> @Model.FaceBook
+                                </a>
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <a asp-controller="PageSetting" asp-action="SettingForm" asp-route-Settingid="@Model.SettingId" class="btn btn-primary btn-edit-settings">
+                            <i class="fas fa-edit me-2"></i> Update Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script {
+    <script src="~/admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="~/admin/assets/js/file-upload.js"></script>
+    <script src="~/admin/assets/js/typeahead.js"></script>
+    <script src="~/admin/assets/js/select2.js"></script>
+}
